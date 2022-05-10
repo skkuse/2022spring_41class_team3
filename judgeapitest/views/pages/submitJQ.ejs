@@ -1,44 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <%- include("../partials/head"); %>
-  </head>
-  <body class="container">
-    <header><%- include("../partials/header"); %></header>
-    <main>
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="jumbotron">
-            <h1>Write your code!</h1>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <form action="/code/jquery" method="post" class="myform">
-            <textarea id="source" cols="60" rows="20"></textarea>
-            <button class="submit">Submit</button>
-          </form>
-        </div>
-      </div>
-      <div class="row">
-        <div class="card col-sm-4">
-          <div class="card-header">Memory</div>
-          <div class="card-body" id="memory"></div>
-        </div>
 
-        <div class="card col-sm-4">
-          <div class="card-header">Time</div>
-          <div class="card-body" id="time"></div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="card col-sm-12">
-          <div class="card-header">Result</div>
-          <div class="card-body" id="result"></div>
-        </div>
-      </div>
-    </main>
-    <footer><%- include("../partials/footer"); %></footer>
+<head>
+  <%- include("../partials/head"); %>
+</head>
 
-    <script type="text/javascript" src="/javascript/submit/jquery"></script>
-  </body>
+<body class="container">
+  <header><%- include("../partials/header"); %></header>
+  <main>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="jumbotron">
+          <h1>Write your code!</h1>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <form action="/code/jquery" method="post" class="myform">
+          <textarea id="source" cols="60" rows="20"></textarea>
+          <button class="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="card col-sm-4">
+        <div class="card-header">Memory</div>
+        <div class="card-body" id="memory"></div>
+      </div>
+
+      <div class="card col-sm-4">
+        <div class="card-header">Time</div>
+        <div class="card-body" id="time"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="card col-sm-12">
+        <div class="card-header">Result</div>
+        <div class="card-body" id="result"></div>
+      </div>
+    </div>
+  </main>
+  <footer><%- include("../partials/footer"); %></footer>
+
+  <script type="text/javascript" src="/javascript/submit/jquery"></script>
+</body>
+
 </html>

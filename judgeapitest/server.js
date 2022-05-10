@@ -2,10 +2,18 @@ let express = require("express");
 let app = express();
 
 
-const {router:codeRouter} = require("./router/codeRouter.js");
-const {router:jsRouter} = require("./router/jsRouter");
-const {router:navRouter} = require("./router/navRouter");
-app.use(express.urlencoded({ extended: false }));
+const {
+  router: codeRouter
+} = require("./router/codeRouter.js");
+const {
+  router: jsRouter
+} = require("./router/jsRouter");
+const {
+  router: navRouter
+} = require("./router/navRouter");
+app.use(express.urlencoded({
+  extended: false
+}));
 app.set("view engine", "ejs");
 
 //Can add routers to make overall code more neat.
