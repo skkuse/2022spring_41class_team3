@@ -3,7 +3,7 @@ const router = express.Router();
 const apikey = require("../secret");
 let axios = require("axios");
 
-router.post("/jquery", (req,res)=>{
+router.post("/jquery", async (req, res) => {
 
   const option = {
     method: "POST",
@@ -18,31 +18,28 @@ router.post("/jquery", (req,res)=>{
       source_code: req.body.source,
     }),
   };
-  axios
-    .request(option)
-    .then((response) => {
-      console.log(response.data);
-      const option2 = {
-        method: "GET",
-        url: `https://judge0-ce.p.rapidapi.com/submissions/${response.data.token}`,
-        headers: {
-          "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
-          "X-RapidAPI-Key": apikey,
-        },
-      };
-      axios
-        .request(option2)
-        .then((response2) => {
-          console.log(response2.data);
-          res.send(response2.data);
-        })
-        .catch((err) => {
-          console.log(err); //should implement send error for error handling
-        });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+
+
+  try {
+    const respFromJquery = await axios.request(option);
+    // console.log(respFromJquery.data);
+    const option2 = {
+      method: "GET",
+      url: `https://judge0-ce.p.rapidapi.com/submissions/${respFromJquery.data.token}`,
+      headers: {
+        "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
+        "X-RapidAPI-Key": apikey,
+      },
+    };
+    const respToFront = await axios.request(option2);
+    // console.log(respToFront.data);
+    res.send(respToFront.data);
+  } catch (err) {
+    console.log("Error in respFromJquery section");
+    console.log(err);
+  }
 });
 
-module.exports = {router};
+module.exports = {
+  router
+};
