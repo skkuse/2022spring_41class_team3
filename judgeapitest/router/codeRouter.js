@@ -40,7 +40,7 @@ router.post("/script", async (req, res) => {
     console.log(data_utf8);
     data_return.success = false;
     data_return.output.push(data_utf8);
-    data_return.output[0] = "ERROR"; //Hide directory
+    data_return.output[0] = "ERROR"; //Hide directory but it doesn't work 
   })
 
   child.on('close', (code) => {

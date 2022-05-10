@@ -17,18 +17,16 @@ form.addEventListener("submit", (e) => {
         console.log(xhr.response);
 
         button.style.visibility = "visible";
-        res.innerHTML = xhr.response;
-        // let result = JSON.parse(xhr.response);
-        // if (result.stderr) {
-        //     memoryContainer.innerHTML = "<h3>Error :(</h3>";
-        //     timeContainer.innerHTML = "<h3>Error :(</h3>";
-        //     let temp = result.stderr.split("\n").map((e) => `<p>${e}</p>`); //Javascript does not render \n so this process is used to render.
-        //     res.innerHTML = temp.join("");
-        // } else {
-        //     memoryContainer.innerHTML = `<h3>Memory: ${result.memory}</h3>`;
-        //     timeContainer.innerHTML = `<h3>Time: ${result.time}</h3>`;
-        //     let temp = result.stdout.split("\n").map((e) => `<p>${e}</p>`); //Javascript does not render \n so this process is used to render.
-        //     res.innerHTML = temp.join("");
-        // }
+
+        let result = JSON.parse(xhr.response);
+        console.log(result.output)
+        let temp = ""
+        if (result.success) {
+            temp = result.output[0].split("\n").map((e) => `<p>${e}</p>`); //Javascript does not render \n so this process is used to render.
+        } else {
+            temp = result.output
+        }
+
+        res.innerHTML = temp.join("");
     };
 })
