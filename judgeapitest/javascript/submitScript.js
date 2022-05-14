@@ -12,11 +12,14 @@ form.addEventListener("submit", (e) => {
     let xhr = new XMLHttpRequest();
     xhr.open(form.method, form.action, true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.send(`source=${text.value}`);
+    let temp = encodeURIComponent(text.value);
+    xhr.send(`source=${temp}`);
+    // console.log(temp)
     xhr.onload = () => {
         console.log(xhr.response);
 
         button.style.visibility = "visible";
+
 
         let result = JSON.parse(xhr.response);
         console.log(result.output)
