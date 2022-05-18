@@ -1,0 +1,19 @@
+#content
+{
+	float:left;
+	width:50%;
+	background:gray;
+	overflow:scroll;
+	height:900px
+}
+
+#sidebar
+{
+	float:right;
+	width:45%;
+	background:white;
+	overflow:scroll;
+	height:900px
+}
+
+
