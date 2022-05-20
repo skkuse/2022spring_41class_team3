@@ -29,6 +29,7 @@ router.post("/script", async (req, res) => {
   })
 
   child.stdout.on('data', (data) => {
+    console.log(data);
     let data_utf8 = data.toString("utf-8");
     console.log(data_utf8);
     data_return.success = true;
