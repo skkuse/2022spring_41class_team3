@@ -1,0 +1,22 @@
+a = int(input())
+b = int(input())
+c = int(input())
+mx = b;
+mn = b
+if b<a :
+    tmp = a;
+    a = b;
+    b = tmp;
+if c<b :
+    tmp = c;
+    c = b;
+    b = tmp;    
+if b<a :
+    tmp = a;
+    a = b;
+    b = tmp;
+if c<b :
+    tmp = c;
+    c = b;
+    b = tmp;    
+print(a, b, c)
