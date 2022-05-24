@@ -1,18 +1,19 @@
-let button = document.querySelector(".submit");
-let text = document.querySelector("#usercode");
+let button = document.querySelector("#submit");
+//let text = document.querySelector("#usercode");
 let res = document.querySelector("#result");
 let che = document.querySelector("#check");
 let form = document.querySelector(".UserCode");
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
+    let text = editor.getValue();
     res.innerHTML = "Processing...";
     button.style.visibility = "hidden";
     let xhr = new XMLHttpRequest();
     
     xhr.open(form.method, form.action, true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    let temp = encodeURIComponent(text.value);
+    let temp = encodeURIComponent(text);
     xhr.send(`usercode=${temp}`);
     console.log(temp)
     xhr.onload = () => {
