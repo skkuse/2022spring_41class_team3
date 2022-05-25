@@ -15,7 +15,10 @@ const cookie	= require("cookie");
 const crypto	= require("crypto");
 const bodyParser = require("body-parser");
 const Markdown = require("markdown-it");
+const UserStorage = require("./UserStorage");
 const fs = require("fs");
+
+
 
 const {
 	spawn
@@ -44,9 +47,47 @@ app.use("/code", codeRouter);
 
 app.use("/javascript", jsRouter);
 
+const mysql      = require('mysql');
+const req = require("express/lib/request");
+
+
+
+///crypto
+const createSalt = () =>
+    new Promise((resolve, reject) => {
+        crypto.randomBytes(64, (err, buf) => {
+            if (err) reject(err);
+            resolve(buf.toString('base64'));
+        });
+    });
+///
+const createHashedPassword = (plainPassword) =>
+    new Promise(async (resolve, reject) => {
+        const salt = await createSalt();
+        crypto.pbkdf2(plainPassword, salt, 9999, 64, 'sha512', (err, key) => {
+            if (err) reject(err);
+            resolve({ password: key.toString('base64'), salt });
+        });
+    });
+/////
+// EJS Directory Setting
+/////
+const makePasswordHashed = (salt, plainPassword) =>
+    new Promise(async (resolve, reject) => {
+        
+        crypto.pbkdf2(plainPassword, salt, 9999, 64, 'sha512', (err, key) => {
+            if (err) reject(err);
+            resolve(key.toString('base64'));
+        });
+    });
+
+
+
 /////
 // Client Cookie Mapping
 /////
+
+
 function IsCookieExist(request)
 {
 	console.log(request.header.cookie)
@@ -61,15 +102,51 @@ function IsCookieExist(request)
 	return true;
 }
 
-function IsCookieValid(request)
+
+async function IsCookieNew(request)
 {
+
 	// YOUR CODE HERE
 	// THIS FUNCTION SHOULD CHECK THE VALIDITY OF COOKIE USING DATABASE
-	return true;
+	const {id,Email,psword,admin,salt}=await UserStorage.getUserInfo(request.body.id);
+	
+			if (id==="admin"){
+				return true;
+			}else{
+				console.log("ID already exists");
+				return false;
+			}  
+		
+			return true;
+}
+async function IsCookieValid(request)
+{
+
+	// YOUR CODE HERE
+	// THIS FUNCTION SHOULD CHECK THE VALIDITY OF COOKIE USING DATABASE
+	const {id,Email,psword,admin,salt}=await UserStorage.getUserInfo(request.body.id);
+
+		if(id!=="admin"){
+			
+			const hashedpassword = await makePasswordHashed(salt, request.body.pwd);
+			if (id===request.body.id && psword===hashedpassword){
+			console.log("here");
+				return true;
+			}else{
+			console.log("here2");
+				return false;
+			}  
+		
+		}else{
+			console.log("Id does not exist");
+			return false;
+		}
+			return true;
 }
 
-function IsCookieAdmin(request)
+async function IsCookieAdmin(request)
 {
+
 	if (!IsCookieExist(request))
 	{
 		return false;
@@ -81,6 +158,12 @@ function IsCookieAdmin(request)
 
 	// YOUR CODE HERE
 	// THIS FUNCTION SHOULD CHECK WHETHER THE COOKIE(SESSION) IS ADMIN OR NOT.
+	const {id,Email,psword,admin,salt}=await UserStorage.getUserInfo(request.body.id);
+	if (id===request.body.id && admin===1){
+		return true;
+	}else{
+		return false;
+	}  
 	return true;
 }
 
@@ -94,12 +177,15 @@ function AssignCookie(response)
 }
 
 
+
 /////
 // HTTP Request - Response Mapping
 /////
 app.get('/', function(req, res){
 	if( IsCookieExist(req) && IsCookieValid(req) )
 	{
+
+		console.log("cookie REQUEST :" + req)
 		res.redirect('/class')
 	}
 	res.redirect('/main')
@@ -156,15 +242,40 @@ app.post('/adduser', function(req, res){
 	console.log("[|] PASSWORD1 : " + req.body.pwd1)
 	console.log("[|] PASSWORD2 : " + req.body.pwd2)
 
+	const id=req.body.id;
+	const info2=req.body.info2;
+	const admin = 0;
+	IsCookieNew(req).then((newone)=>{
+		if(newone){
+			
+		if (req.body.pwd1===req.body.pwd2){
+			
+			createHashedPassword(req.body.pwd1).then((ob)=>{
+			
+				const {password,salt}=ob;
+				//console.log(ob);
+				//console.log("has : "+password+"\nsat :"+salt);
+				
+				UserStorage.save({id,info2,password,admin,salt});
+				res.redirect('/main');
+			});
+		}else{
+			
+			res.redirect('/register');
+		}
+	}else{
+		
+		res.redirect('/register');
+	}
+	});
+
 	// THIS FUNCTION SHOULD DO REGISTER
 	// NOTE THAT CLIENT SHOULD SEND PWD IN HASHED.
-	
-	if(true)
-	{
-		res.redirect('/main')
-	}
-
+//insert 2 
 })
+
+
+
 
 app.post('/login',function(req, res){
 
@@ -174,44 +285,19 @@ app.post('/login',function(req, res){
 
 	// THIS FUNCTION SHOULD DO LOGIN
 	// NOTE THAT CLIENT SHOULD SEND PWD IN HASHED.
+
+	IsCookieValid(req).then((loginSuccess)=> {
+		console.log(loginSuccess);
+		if(loginSuccess){
+			res.redirect('/class')
+		}else{
+			console.log("LOGIN FAIL")
+			res.redirect('/main')
+		}
+	});
 	
-	var loginSuccess = true;
-	if(loginSuccess)
-	{
-		res.redirect('/class')	
-	}
-	else
-	{
-		console.log("LOGIN FAIL")
-		res.redirect('/main')
-	}
+
 })
-/*
-app.post('/testing', function(req, res){
-	
-	console.log("[+] PROBLEM SOLVE REQ POST")
-	console.log("[|] PROBLEM NO:  " + req.body.no)
-	console.log("[|] USER CODE:  " + req.body.usercode.slice(0,5) + "...")
-
-	// TODO
-	// Sesson Control.
-	if (false){
-	
-	if( IsCookieExist() && IsCookieValid() )
-	{
-		console.log("[|] USER SESSION" + req.header.cookie.id)
-	}
-	else
-	{
-		console.log("[|] WITH INVALID SESSION!")
-		res.redirect('/main')
-	}
-
-	}
-
-	res.redirect('/class')
-})
-*/
 
 app.get('*',function(req, res){
 	res.status(404).send('404 NOT FOUND')

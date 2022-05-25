@@ -32,39 +32,6 @@ form.addEventListener("submit", (e) => {
             che.innerHTML = "틀렸습니다.";
         }
 
-        // if (window.document.location.href == "http://localhost:8080/lecture?no=118") {
-        //     if (result.output[0] == "hello! python\r\n") {
-        //         che.innerHTML = "정답입니다.";
-        //     } else {
-        //         che.innerHTML = "틀렸습니다.";
-        //     }
-        // } else if (window.document.location.href == "http://localhost:8080/lecture?no=119") {
-        //     if (result.output[0] == "2 3 4\r\n") {
-        //         che.innerHTML = "정답입니다.";
-        //     } else {
-        //         che.innerHTML = "틀렸습니다.";
-        //     }
-        // } else if (window.document.location.href == "http://localhost:8080/lecture?no=120") {
-        //     if (result.output[0] == "3\r\n312\r\n492\r\n") {
-        //         che.innerHTML = "정답입니다.";
-        //     } else {
-        //         che.innerHTML = "틀렸습니다.";
-        //     }
-        // } else if (window.document.location.href == "http://localhost:8080/lecture?no=121") {
-        //     if (result.output[0] == "[12, 13, 23, 39, 43, 45, 46, 84, 91]\r\n") {
-        //         che.innerHTML = "정답입니다.";
-        //     } else {
-        //         che.innerHTML = "틀렸습니다.";
-        //     }
-        // } else if (window.document.location.href == "http://localhost:8080/lecture?no=122") {
-        //     if (result.output[0] == "1\r\n2\r\n10\r\n12\r\n") {
-        //         che.innerHTML = "정답입니다.";
-        //     } else {
-        //         che.innerHTML = "틀렸습니다.";
-        //     }
-        // } else {
-        //     che.innerHTML = "NOT HERE";
-        // }
 
         let temp = []
         if (result.success) {

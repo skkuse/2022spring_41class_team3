@@ -2,9 +2,9 @@
 {
 	float:left;
 	width:50%;
-	background:gray;
+	background: white;
 	overflow:scroll;
-	height:900px
+	height:900px;
 }
 
 #sidebar
@@ -13,7 +13,7 @@
 	width:45%;
 	background:white;
 	overflow:scroll;
-	height:900px
+	height:900px;
 }
 
 .card-header{
@@ -27,7 +27,7 @@
 }
 
 .card-body-result{
-	height: 200px;
+	min-height: 50px;
 }
 
 .card-body-check{
