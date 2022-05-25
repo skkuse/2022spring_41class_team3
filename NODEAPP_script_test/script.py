@@ -1,1 +1,3 @@
-print("1")
+s="hello!"
+t = "python"
+print(s,t)
