@@ -47,10 +47,14 @@ const {
 const {
 	escapeRE
 } = require("markdown-it/lib/common/utils");
+const {
+	router: spawnRouter
+} = require("./router/spawnRouter");
 app.use("/code", codeRouter);
 
 app.use("/javascript", jsRouter);
 
+app.use("/spawn", spawnRouter);
 const mysql = require('mysql');
 const req = require("express/lib/request");
 

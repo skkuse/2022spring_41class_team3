@@ -14,10 +14,13 @@
     </div>
     <div class="row">
         <div id="sidebar">
-            <form action="/code/jquery" method="post" class="UserCode">
+            <form action="/spawn/socket" method="post" class="UserCode">
                 <input name="no" readonly type="text" value="<%= NUMBER %>"></input>
                 <!--		<textarea id="usercode" style="width: 90%; height: 400px"  placeholder="문제 기본 코드를 복사하여 사용해주세요."></textarea> -->
+                <br>client.py
                 <div id="editor" style="width: 90%; height: 400px"></div>
+                server.py
+                <div id="editor2" style="width: 90%; height: 400px"></div>
                 <button id="submit" class="custom-btn btn-5"> <span>TEST!</span> </button>
             </form>
             <div class="card-header"> Result</div>
@@ -33,8 +36,12 @@
     </script>
     <script>
         var editor = ace.edit("editor");
+
+        let editor2 = ace.edit("editor2");
         editor.setTheme("ace/theme/xcode");
         editor.getSession().setMode("ace/mode/python");
+        editor2.setTheme("ace/theme/xcode");
+        editor2.getSession().setMode("ace/mode/python");
     </script>
 </body>
 

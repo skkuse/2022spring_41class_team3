@@ -17,16 +17,18 @@ back.addEventListener("click", () => {
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
-    let text = editor.getValue();
+    let client = editor.getValue();
+    let server = editor2.getValue();
     res.innerHTML = "Processing...";
     button.style.visibility = "hidden";
     let xhr = new XMLHttpRequest();
 
     xhr.open(form.method, form.action, true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    let temp = encodeURIComponent(text);
+    let temp = encodeURIComponent(client);
+    let temp2 = encodeURIComponent(server)
     const urlParam = new URLSearchParams(window.location.search)
-    xhr.send(`usercode=${temp}&qnum=${urlParam.get('no')}`);
+    xhr.send(`client=${temp}&server=${temp2}&qnum=${urlParam.get('no')}`);
     console.log(temp)
     xhr.onload = () => {
         console.log(xhr.response);
@@ -43,14 +45,10 @@ form.addEventListener("submit", (e) => {
             che.innerHTML = "틀렸습니다.";
         }
 
-
-        let temp = []
         if (result.success) {
-            temp = result.output.split("\n").map((e) => `<p>${e}</p>`); //Javascript does not render \n so this process is used to render.
+            res.innerHTML = "Socket Worked" //Javascript does not render \n so this process is used to render.
         } else {
-            temp = result.output
+            res.innerHTML = "Socket Failed"
         }
-        console.log(temp)
-        res.innerHTML = temp.join("");
     };
 })
