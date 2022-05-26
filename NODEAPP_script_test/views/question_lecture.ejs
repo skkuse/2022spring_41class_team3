@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Python Lecture</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/lecture.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="content">
+        <%- MDSRC %>
+    </div>
+    <div class="row">
+        <div id="sidebar">
+            <form action="/code/jqueryquestion" method="post" class="UserCode">
+                <input name="no" readonly type="text" value="<%= NUMBER %>"></input>
+                <!--		<textarea id="usercode" style="width: 90%; height: 400px"  placeholder="문제 기본 코드를 복사하여 사용해주세요."></textarea> -->
+                <div id="editor" style="width: 90%; height: 400px"></div>
+                <button id="submit" class="custom-btn btn-5"> <span>TEST!</span> </button>
+            </form>
+            <div class="card-header"> Result</div>
+            <div class="card-body-result" id="result"></div>
+            <div class="card-header"> Check</div>
+            <div class="card-body-check" id="check"></div>
+            <button id="back" class="custom-btn btn-5"> <span>Back</span> </button>
+            <!-- <button id="next" class="custom-btn btn-5"> <span>Next</span> </button> -->
+        </div>
+    </div>
+    <script type="text/javascript" src="/javascript/submit/scriptq"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8">
+    </script>
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/xcode");
+        editor.getSession().setMode("ace/mode/python");
+    </script>
+</body>
+
+</html>

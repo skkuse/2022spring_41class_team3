@@ -46,11 +46,12 @@ form.addEventListener("submit", (e) => {
 
         let temp = []
         if (result.success) {
-            temp = result.output.split("\n").map((e) => `<p>${e}</p>`); //Javascript does not render \n so this process is used to render.
+            // temp = result.output.split("\n").map((e) => `<p>${e}</p>`); //Javascript does not render \n so this process is used to render.
+            temp = `${result.assess.testcase}/3 Testcases complete`
         } else {
             temp = result.output
         }
         console.log(temp)
-        res.innerHTML = temp.join("");
+        res.innerHTML = temp;
     };
 })
