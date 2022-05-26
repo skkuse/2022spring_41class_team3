@@ -12,6 +12,10 @@ router.get("/submit/script", (req, res) => {
     let tmp = resolve("./javascript/submitScript.js");
     res.sendFile(tmp);
 })
+router.get("/submit/multi", (req, res) => {
+    let tmp = resolve("./javascript/multi.js")
+    res.sendFile(tmp);
+})
 
 module.exports = {
     router
